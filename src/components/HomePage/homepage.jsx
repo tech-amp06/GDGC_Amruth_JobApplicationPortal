@@ -5,11 +5,13 @@ import JobDetails from '../JobDetails/JobDetails';
 import './homepage.css';
 
 export const ChosenJob = createContext(undefined);
+export const FilterContext = createContext(undefined);
 
 function Homepage() {
   const [random, setRandom] = useState(false);
   const [jobPostings, setJobPostings] = useState([]);
   const [chosenJobId, setChosenJobId] = useState("");
+  const [filters, setFilters] = useState({});
 
   const fetchJobPostings = async () => {
     fetch("https://jsonfakery.com/jobs")
@@ -23,12 +25,26 @@ function Homepage() {
     fetchJobPostings();
   }, [random]);
 
+  useEffect(() => {
+    let result = jobPostings.filter((jobPosting) => {
+      const jobLocation = jobPosting.location?.split(",")[1]?.toLowerCase().trim();
+      return filters.location.includes(jobLocation);
+    });
+
+    if (result.length) {
+      setJobPostings(result);
+    } else {
+      fetchJobPostings();
+    }
+  }, [filters]);
+
   return (
     <>
       <div className="homepage">
         <div className="filters-component">
-          <Filters />
-          { chosenJobId }
+          <FilterContext.Provider value={{filters, setFilters}}>
+            <Filters />
+          </FilterContext.Provider>
         </div>
         <div className="job-postings-component">
           <ChosenJob.Provider value={{chosenJobId, setChosenJobId}}>

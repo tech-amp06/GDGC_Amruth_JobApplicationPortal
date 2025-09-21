@@ -1,0 +1,17 @@
+.filters {
+  margin-top: 100px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  margin-left: 10px;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.location {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.location h6 {
+  margin-top: 20px;
+  color: black;
+}

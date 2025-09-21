@@ -17,8 +17,11 @@ function SignupPage() {
   }, []);
 
   const addUser = async (newUser) => {
+    // let temp;
     if (newUser.role === "recruiter") {
-      newUser = { ...newUser, appliedJobs: [], yearsOfExperience: 0, skills: [] };
+      // temp = { ...newUser, yearsOfExperience: 0, skills: [] };
+      newUser["yearsOfExperience"] = 0;
+      newUser["skills"] = [];
     } 
 
     let response = await fetch('http://localhost:3000/users', {
@@ -66,12 +69,12 @@ function SignupPage() {
 
                 <div className="sector">
                   <div>
-                    <input onChange={(e) => {setRole(e.target.value)}} {...firstStep("role")} style={{ display: 'inline', width: 'fit-content', marginRight: '10px' }} type="radio" name="role" id="seeker" value="seeker" />
+                    <input {...firstStep("role")} style={{ display: 'inline', width: 'fit-content', marginRight: '10px' }} type="radio" name="role" id="seeker" value="seeker" />
                     <label htmlFor="seeker">Seeker</label>
                   </div>
 
                   <div>
-                    <input onChange={(e) => {setRole(e.target.value)}} {...firstStep("role")} style={{ display: 'inline', width: 'fit-content', marginRight: '10px' }} type="radio" name="role" id="recruiter" value="recruiter" />
+                    <input {...firstStep("role")} style={{ display: 'inline', width: 'fit-content', marginRight: '10px' }} type="radio" name="role" id="recruiter" value="recruiter" />
                     <label htmlFor="recruiter">Recruiter</label>
                   </div>
                 </div>

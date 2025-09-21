@@ -17,6 +17,24 @@
       ],
       "yearsOfExperience": 4,
       "currentCompany": "Amazon"
+    },
+    {
+      "id": "a42f",
+      "username": "sarah_walker22@gmail.com",
+      "password": "sarah_22",
+      "role": "seeker",
+      "name": "Sarah Walker",
+      "skills": [
+        "React",
+        "Angular",
+        "Node",
+        "Express",
+        "MongoDB",
+        "MySQL",
+        "PostgreSQL"
+      ],
+      "yearsOfExperience": 4,
+      "currentCompany": "Amazon"
     }
   ]
 }

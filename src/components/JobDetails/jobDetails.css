@@ -37,3 +37,7 @@
   font-size: 1.4rem;
   margin: 0;
 }
+
+.true-applied {
+  background-color: green;
+}

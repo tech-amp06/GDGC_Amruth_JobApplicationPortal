@@ -1,7 +1,11 @@
 import './JobDetails.css';
-import jobs from '../../assets/jobs.json';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 function JobDetails({jobDetail}) {
+  const navigate = useNavigate();
+  const [applied, setApplied] = useState(false);
+
   let qualification = jobDetail.qualifications;
   qualification = qualification.replace('[', '');
   qualification = qualification.replace(']', '');
@@ -43,10 +47,14 @@ function JobDetails({jobDetail}) {
       </div>
       
       <button style={{ width: '100%' }} className="apply" onClick={async () => {
-        
+        if (!localStorage.getItem('user')) {
+          navigate('/login');
+        } else {
+          setApplied(true);
+        }
       }}
     >
-        Apply Now
+      Apply now
       </button>
     </div>
   );
