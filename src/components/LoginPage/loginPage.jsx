@@ -12,9 +12,8 @@ function LoginPage() {
     users.users.find(user => {
       if (user.username === credentials.username && user.password === credentials.password) {
         localStorage.setItem('user', JSON.stringify(user.name));
-        console.log(user.role);
         localStorage.setItem('role', JSON.stringify(user.role));
-        
+        localStorage.setItem('id', JSON.stringify(user.id));
         window.location.href = '/';
         setValidCredentials(true);
       } else {

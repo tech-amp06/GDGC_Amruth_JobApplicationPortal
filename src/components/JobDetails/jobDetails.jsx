@@ -1,6 +1,5 @@
-import React from 'react';
-import './JobDetails.css'
-import { Link } from 'react-router-dom';
+import './JobDetails.css';
+import jobs from '../../assets/jobs.json';
 
 function JobDetails({jobDetail}) {
   let qualification = jobDetail.qualifications;
@@ -43,11 +42,12 @@ function JobDetails({jobDetail}) {
         </div>
       </div>
       
-      <Link to={'/login'} style={{ textDecoration: 'none' }}>
-        <button style={{ width: '100%' }} className="apply">
-          Apply Now
-        </button>
-      </Link>
+      <button style={{ width: '100%' }} className="apply" onClick={async () => {
+        
+      }}
+    >
+        Apply Now
+      </button>
     </div>
   );
 }

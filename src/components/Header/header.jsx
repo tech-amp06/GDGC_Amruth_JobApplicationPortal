@@ -34,6 +34,8 @@ function Header() {
           <ul className="dropdown-menu">
             <li><a className="dropdown-item" href="#" onClick={() => {
               localStorage.removeItem('user');
+              localStorage.removeItem('id');
+              localStorage.removeItem('role');
               window.location.href = '/login';
             }}>Logout</a></li>
           </ul>
