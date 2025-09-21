@@ -1,0 +1,39 @@
+.job-details {
+  margin-top: 100px;
+  margin-right: 10px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  font-size: 0.9rem;
+  border-radius: 15px;
+}
+
+.job-details h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.job-details h4, .job-details h5 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.job-details {
+  font-size: 0.9rem;
+}
+
+.salary-details {
+  width: auto;
+  background-color: var(--tertiary);
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.salary-details p:nth-child(1) {
+  color: var(--primary);
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin: 0;
+}

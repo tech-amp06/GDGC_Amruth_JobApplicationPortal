@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": "5f4a",
+      "username": "michael09@gmail.com",
+      "password": "michael09",
+      "role": "seeker",
+      "name": "Michael Johnson",
+      "skills": [
+        "React",
+        "Angular",
+        "Node",
+        "Express",
+        "MongoDB",
+        "MySQL",
+        "PostgreSQL"
+      ],
+      "yearsOfExperience": 4,
+      "currentCompany": "Amazon"
+    }
+  ]
+}

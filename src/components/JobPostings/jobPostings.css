@@ -1,0 +1,46 @@
+.job-postings {
+  margin-top: 100px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.job-postings-header {
+  display: flex;
+}
+
+.segments {
+  color: grey;
+  font-size: 0.9rem;
+  height: 80px;
+}
+
+.segments p {
+  margin: 0;
+  flex: 200px;
+}
+
+.navigate {
+  height: 80px !important;
+  line-height: 80px;
+}
+
+.navigate img {
+  height: 12px;
+  display: inline;
+}
+
+.next-img {
+  height: 20px;
+  padding: 8px;
+  margin: 7px;
+  aspect-ratio: 1 / 1;
+}
+
+.next-img:hover {
+  cursor: pointer;
+  background-color: var(--hovers);
+  border-radius: 50%;
+}
+
+.prev {
+  transform: scaleX(-1);
+}

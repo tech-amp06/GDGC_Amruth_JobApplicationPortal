@@ -1,0 +1,46 @@
+.logo {
+  font-family: Roboto Condensed;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  margin-left: 25px;
+}
+
+.menu {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: auto 25%;
+}
+
+.sign-up {
+  background-color: white;
+  padding: 6px 25px;
+  border: none;
+  border-radius: 10px;
+  color: var(--primary);
+  font-weight: bold;
+}
+  .sign-up:hover {
+    cursor: pointer;
+    background-color: var(--tertiary);
+    transition: 0.15s;
+  }
+
+.user-section {
+  width: 200px;
+}
+
+.jobs, .companies, .salary, .resources {
+  font-weight: bold;
+  color: white;
+  padding: 6px 15px;
+}
+  .jobs:hover, .companies:hover, .salary:hover, .resources:hover {
+    background-color: white;
+    border-radius: 10px;
+    color: var(--primary);
+    cursor: pointer;
+    transition: 0.15s;
+  }
