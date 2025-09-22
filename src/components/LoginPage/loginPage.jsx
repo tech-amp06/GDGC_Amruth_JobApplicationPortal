@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import './LoginPage.css';
+import './loginPage.css';
 import { Link } from 'react-router-dom';
 import users from '../../assets/users.json';
 

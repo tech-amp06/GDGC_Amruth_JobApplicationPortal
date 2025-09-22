@@ -1,7 +1,7 @@
 import React, { useState, createContext, useEffect } from 'react';
 import Filters from '../Filters/filters';
-import JobPostings from '../JobPostings/JobPostings';
-import JobDetails from '../JobDetails/JobDetails';
+import JobPostings from '../JobPostings/jobPostings';
+import JobDetails from '../JobDetails/jobDetails';
 import './homepage.css';
 
 export const ChosenJob = createContext(undefined);

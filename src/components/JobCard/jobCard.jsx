@@ -1,5 +1,5 @@
 import React from 'react';
-import './JobCard.css';
+import './jobCard.css';
 import { useContext } from 'react';
 import { ChosenJob } from '../HomePage/homepage';
 
