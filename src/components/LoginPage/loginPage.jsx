@@ -1,25 +1,28 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import './loginPage.css';
-import { Link } from 'react-router-dom';
-import users from '../../assets/users.json';
+import { Link, useNavigate } from 'react-router-dom';
+import { auth } from '../../Apis/auth';
 
-function LoginPage() {
+function LoginPage({setLoggedInUser}) {
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const [validCredentials, setValidCredentials] = useState(true);
 
-  const authenticate = (credentials) => {
-    users.users.find(user => {
-      if (user.username === credentials.username && user.password === credentials.password) {
-        localStorage.setItem('user', JSON.stringify(user.name));
-        localStorage.setItem('role', JSON.stringify(user.role));
-        localStorage.setItem('id', JSON.stringify(user.id));
-        window.location.href = '/';
-        setValidCredentials(true);
-      } else {
-        setValidCredentials(false);
-      }
-    })
+  const authenticate = async (credentials) => {
+    let response = await auth(credentials);
+
+    if (response && response.info) {
+      localStorage.setItem('user', JSON.stringify(response.info.uname));
+      localStorage.setItem('role', JSON.stringify(response.info.user_role));
+      localStorage.setItem('id', JSON.stringify(response.info.userid));
+      setValidCredentials(true);
+      setLoggedInUser(response.info.uname);
+      navigate('/');
+    } else {
+      setValidCredentials(false);
+    }
+    
   }
 
   return (

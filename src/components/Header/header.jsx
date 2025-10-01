@@ -1,7 +1,18 @@
+import { useContext, useEffect, useState } from 'react';
 import './header.css';
 import { Link } from 'react-router-dom';
+import { DetectLogin } from '../../App';
 
 function Header() {
+  const {loggedInUser, setLoggedInUser} = useContext(DetectLogin);
+
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      setLoggedInUser(JSON.parse(localStorage.getItem('user')));
+      console.log(JSON.parse(localStorage.getItem('user')));
+    }
+  }, [localStorage.getItem('user')]);
+  
   return (
     <div className="header">
       <div className="logo">
@@ -20,14 +31,16 @@ function Header() {
       </div>
 
       {
-        localStorage.getItem('user') ?
+        loggedInUser ?
         // <div className="user-section">
         //   <span style={{ marginRight: 10 }}>Hello, {JSON.parse(localStorage.getItem('user')).split(" ")[0]}</span>
         // </div> 
         
         <div className="dropdown">
           <a className="btn dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <span style={{ marginRight: 10 }}>Hello, {JSON.parse(localStorage.getItem('user')).split(" ")[0]}</span>
+            <span style={{ marginRight: 10, fontWeight: 'bold' }}>Hello, {loggedInUser.split(" ")[0]}</span>
+
+            {/* <span style={{ marginRight: 10 }}>{ localStorage.getItem('user') }</span> */}
             {/* <span style={{ marginRight: 10 }}>Hello</span> */}
           </a>
 

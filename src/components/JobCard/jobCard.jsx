@@ -40,7 +40,7 @@ function JobCard({jobPosting, isChosen}) {
       </div>
 
       {
-        JSON.parse(localStorage.getItem('role')) === 'seeker' ? 
+        localStorage.getItem('role') ? 
         <button className='apply'>Apply now</button> : <></>
       }
     </div>
