@@ -2,36 +2,26 @@ import { set, useForm } from 'react-hook-form';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import users from '../../assets/users.json';
+import { registerUser } from '../../Apis/register';
 
 function SignupPage() {
   const navigate = useNavigate();
   const [usersList, setUsersList] = useState([]);
-  const { register: firstStep, handleSubmit: handleFirstStep } = useForm();
-  const { register: secondStep, handleSubmit: handleSecondStep } = useForm();
-  const { register: profileInformation, handleSubmit: handleProfileInformation } = useForm();
+  const { register, handleSubmit } = useForm();
   const [proceed, setProceed] = useState(false);
-  const [userDetails, setUserDetails] = useState({});
 
   useEffect(() => {
     setUsersList(users);
   }, []);
 
   const addUser = async (newUser) => {
-    // let temp;
-    if (newUser.role === "recruiter") {
-      // temp = { ...newUser, yearsOfExperience: 0, skills: [] };
-      newUser["yearsOfExperience"] = 0;
-      newUser["skills"] = [];
-    } 
+    console.log(newUser);
+    const response = await registerUser(newUser);
 
-    let response = await fetch('http://localhost:3000/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newUser)
-    });
-
-    if (response.status === 201) {
-      console.log(response);
+    if (response) {
+      navigate('/login');
+    } else {
+      console.log("Signup failed!");
     }
   }
 
@@ -46,89 +36,72 @@ function SignupPage() {
           <div className="login-card">
             <h1>Signup</h1>
 
+            <form 
+              style={{ textAlign: 'center' }}
+              onSubmit={handleSubmit(async (details) => {
+                console.log(details);
+                await addUser(details);
+              })}
+            >
+
             {/* First step */}
 
-            { !proceed ?
-              <form 
-                onSubmit={handleFirstStep((newUser) => {
-                  setUserDetails(newUser); 
-                  setProceed(true); 
-                  console.log(userDetails);
-                })} 
-                style={{ textAlign: 'center' }}
-              >
+            { !proceed ? (
+              <div>
                 <div className="sector">
                   <label>Enter username</label>
-                  <input {...firstStep("username")} type="email" name="username" id="username" />
+                  <input {...register("username")} type="email" name="username" id="username" />
                 </div>
 
                 <div className="sector">
                   <label>Enter password</label>
-                  <input {...firstStep("password")} type="password" name="password" id="password" />
+                  <input {...register("user_password")} type="password" name="user_password" id="password" />
                 </div>
 
                 <div className="sector">
                   <div>
-                    <input {...firstStep("role")} style={{ display: 'inline', width: 'fit-content', marginRight: '10px' }} type="radio" name="role" id="seeker" value="seeker" />
+                    <input {...register("user_role")} style={{ display: 'inline', width: 'fit-content', marginRight: '10px' }} type="radio" name="user_role" id="seeker" value="seeker" />
                     <label htmlFor="seeker">Seeker</label>
                   </div>
 
                   <div>
-                    <input {...firstStep("role")} style={{ display: 'inline', width: 'fit-content', marginRight: '10px' }} type="radio" name="role" id="recruiter" value="recruiter" />
+                    <input {...register("user_role")} style={{ display: 'inline', width: 'fit-content', marginRight: '10px' }} type="radio" name="user_role" id="recruiter" value="recruiter" />
                     <label htmlFor="recruiter">Recruiter</label>
                   </div>
                 </div>
 
-                <button className='login-btn' type="submit">Proceed</button>
-              </form> : null
+                <button type="button" className="login-btn" onClick={() => {setProceed(true)}}>Proceed</button>
+              </div>
+              ) : null
             }
 
             {/* Second step */}
 
             { proceed ? 
               (
-              <form 
-                onSubmit={handleSecondStep(async (moreDetails) => {
-                  const newUser = { ...userDetails, ...moreDetails };
-                  setUserDetails(newUser);
-                })} 
-                style={{ textAlign: 'center' }}
-              >
-                <div className="sector">
-                  <label>Enter full name</label>
-                  <input {...secondStep("name")} type="text" name="name" id="name" />
-                </div>
+                <div>
+                  <div className="sector">
+                    <label>Enter full name</label>
+                    <input {...register("uname")} type="text" name="uname" id="name" />
+                  </div>
 
-                {
-                  userDetails.role === "recruiter" ?
-                    <div className="sector">
-                      <label>Enter company name</label>
-                      <input {...secondStep("companyName")} type="text" name="companyName" id="companyName" />
-                    </div> : null
-                }
+                  <div className="sector">
+                    <label>Enter current company</label>
+                    <input {...register("current_company")} type="text" name="current_company" id="companyName" />
+                  </div>
 
-                <div style={{ textAlign: 'left', fontSize: '0.8rem', color: 'grey', fontWeight: 'bold' }} className="go-back">
-                  Go back to <span style={{ color: 'var(--primary)', cursor: 'pointer' }} onClick={() => setProceed(false)}>first step</span>
-                </div>
-                
-                {
-                  userDetails.role === "seeker" ?
-                  <button className='login-btn' type="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  <div style={{ textAlign: 'left', fontSize: '0.8rem', color: 'grey', fontWeight: 'bold' }} className="go-back">
+                    Go back to <span style={{ color: 'var(--primary)', cursor: 'pointer' }} onClick={() => setProceed(false)}>first step</span>
+                  </div>                  
+                  
+                  <button className='login-btn' type="submit">
                     Signup
-                  </button> :
-                  <button className='login-btn' type="submit" onClick={async (moreDetails) => {
-                    let updatedUser = { ...userDetails, ...moreDetails, yearsOfExperience: 0, skills: [], appliedJobs: [] }
-                    setUserDetails(updatedUser);
-                    await addUser(updatedUser);
-                    navigate('/login');
-                  }}>
-                    Complete Signup
                   </button>
-                }
-                
-              </form>
+                </div>
               ) : null
             }
+
+            </form>
 
             <Link
               style={{ marginTop: 20, display: 'block', color: 'var(--primary)', fontSize: '0.8rem' }}
@@ -140,7 +113,7 @@ function SignupPage() {
         </div>
       </div>
 
-      <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      {/* <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-scrollable">
           <div className="modal-content">
             <div className="modal-header">
@@ -149,29 +122,15 @@ function SignupPage() {
             </div>
 
             <div className="modal-body">
-              <form onSubmit={handleProfileInformation(async (moreDetails) => {
-                if (userDetails.role === "seeker") {
-                  userDetails.skills = moreDetails.skills.split(',').map(skill => skill.trim());
-                  userDetails.yearsOfExperience = parseInt(moreDetails.yearsOfExperience);
-                  userDetails.currentCompany = moreDetails.currentCompany;
-                  console.log(userDetails);
-                  await addUser(userDetails);
-                  navigate('/login');
-                }
-              })}>
+              <form>
                 <div className="sector">
                   <label>Enter years of experience</label>
-                  <input {...profileInformation("yearsOfExperience")} type="number" name="yearsOfExperience" id="yearsOfExperience" />
+                  <input type="number" name="experience" id="experience" />
                 </div>
 
                 <div className="sector">
                   <label>Enter skills (comma separated)</label>
-                  <input {...profileInformation("skills")} type="text" name="skills" id="skills" />
-                </div>
-
-                <div className="sector">
-                  <label>Enter current company name</label>
-                  <input {...profileInformation("currentCompany")} type="text" name="currentCompany" id="currentCompany" />
+                  <input type="text" name="skills" id="skills" />
                 </div>
 
                 <button type="submit" style={{ margin: 'auto' }} className='apply' data-bs-dismiss="modal" aria-label="Close">Complete Signup</button>
@@ -179,7 +138,7 @@ function SignupPage() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }
